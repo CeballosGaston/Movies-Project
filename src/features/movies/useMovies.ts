@@ -6,16 +6,19 @@ export const useMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(500);
   const loadMore = () => setPage((p) => p + 1);
 
   const loadMovies = async (pageNumber: number) => {
     try {
       setLoading(true);
-      const data = await getMovies(pageNumber);
+      const { results, totalPages: apiTotalPages } =
+        await getMovies(pageNumber);
+      setTotalPages(apiTotalPages);
       setMovies((prev) => {
         const map = new Map();
 
-        [...prev, ...data].forEach((movie) => {
+        [...prev, ...results].forEach((movie) => {
           map.set(movie.id, movie);
         });
 
@@ -35,6 +38,7 @@ export const useMovies = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (loading) return;
+      if (page > totalPages) return;
       const scrollTop = window.scrollY;
       const windowHeight = window.innerHeight;
       const docHeight = document.documentElement.offsetHeight;
