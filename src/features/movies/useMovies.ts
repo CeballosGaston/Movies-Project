@@ -43,6 +43,11 @@ export const useMovies = (filters: FiltersType) => {
   };
 
   useEffect(() => {
+  setMovies([]);
+  setPage(1);
+}, [filters]);
+
+  useEffect(() => {
     loadMovies(page);
   }, [page, filters]);
 
