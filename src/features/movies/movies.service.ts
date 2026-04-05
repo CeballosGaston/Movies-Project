@@ -1,5 +1,6 @@
 import tmdbClient from "../../core/api/tmdb.client";
-import { mapMovie } from "./movies.mapper";
+import { mapMovie } from "./mapMovie";
+import { mapMovieDetails } from "./mapMovieDetails";
 import type { Movie } from "./movies.types";
 
 interface GetMoviesResponse {
@@ -14,7 +15,7 @@ export const getPopularMovies = async () => {
 
 export const getMovieDetails = async (id: string) => {
   const res = await tmdbClient.get(`/movie/${id}`);
-  return res.data;
+  return mapMovieDetails(res.data);
 };
 
 export const getMovies = async (page: number): Promise<GetMoviesResponse> => {

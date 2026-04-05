@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMovieDetails } from "./movies.service";
 import { MovieDetails } from "./movies.types";
 
+
 export const useMovieDetail = (id: string) => {
   const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [loading, setLoading] = useState(true);

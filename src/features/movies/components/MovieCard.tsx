@@ -9,15 +9,7 @@ interface Props {
 
 export const MovieCard = ({ movie }: Props) => {
   const navigate = useNavigate();
-  // return (
-  //   <div onClick={() => navigate(`/movie/${movie.id}`)}>
-  //     <img
-  //       src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
-  //       alt="{movie.title}"
-  //     />
-  //     <h3>{movie.title}</h3>
-  //   </div>
-  // );
+
 
   return (
     <Link to={`/movie/${movie.id}`} className="block">

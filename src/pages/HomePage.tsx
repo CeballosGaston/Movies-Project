@@ -8,6 +8,7 @@ export const HomePage = () => {
 
   return (
     <div>
+     
       {movies.map((movie) => (
         <MovieCard key={movie.id} movie={movie} />
       ))}
