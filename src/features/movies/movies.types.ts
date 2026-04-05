@@ -23,3 +23,9 @@ export interface MovieDetails {
   cast?: Actor[];
   trailer?: string;
 }
+
+export interface FiltersType {
+  genre?: number;
+  year?: number;
+  rating?: number;
+}

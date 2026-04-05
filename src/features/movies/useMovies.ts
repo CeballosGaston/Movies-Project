@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import type { Movie } from "./movies.types";
 import { getMovies } from "./movies.service";
 import { useRef } from "react";
+import type { FiltersType } from "./movies.types";
 
-export const useMovies = () => {
+export const useMovies = (filters: FiltersType) => {
   const loaderRef = useRef<HTMLDivElement | null>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
@@ -12,12 +13,19 @@ export const useMovies = () => {
   const loadMore = () => setPage((p) => p + 1);
 
   const loadMovies = async (pageNumber: number) => {
+    console.log("FILTROS QUE VAN A API:", {
+      page: pageNumber,
+      ...filters,
+    });
+
     try {
       setLoading(true);
-      const { results, totalPages: apiTotalPages } =
-        await getMovies(pageNumber);
+      const { results, totalPages: apiTotalPages } = await getMovies({
+        ...filters,
+        page: pageNumber,
+      });
       setTotalPages(apiTotalPages);
-      
+
       setMovies((prev) => {
         const map = new Map();
 
@@ -36,7 +44,7 @@ export const useMovies = () => {
 
   useEffect(() => {
     loadMovies(page);
-  }, [page]);
+  }, [page, filters]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

@@ -2,6 +2,8 @@ import type { Movie } from "../movies.types";
 import { Link } from "react-router-dom";
 import { Star, Heart } from "lucide-react";
 import { useFavorites } from "../../favorites/FavoritesContext";
+import { Button } from "../../../components/Button"
+
 
 interface Props {
   movie: Movie;
@@ -46,9 +48,9 @@ const handleFavoriteClick = (e: React.MouseEvent) => {
                   </h3>
                   <p className="text-white/80 text-xs mt-1">{movie.year}</p>
                 </div>
-               <button onClick={handleFavoriteClick}>
+               <Button variant="icon" onClick={handleFavoriteClick}>
   <Heart className={favorite ? "fill-red-500 text-red-500" : ""} />
-</button>
+</Button>
               </div>
 
               {/* Rating and Genres */}
