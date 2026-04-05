@@ -1,15 +1,13 @@
 import type { Actor } from "../actors/actor.types";
 
-
-
 export interface Movie {
-id: number;
-title: string;
-poster: string;
-
+  id: number;
+  title: string;
+  poster: string;
+  year: number;
+  rating: number;
+  genres: string[];
 }
-
-
 
 export interface MovieDetails {
   id: number;
