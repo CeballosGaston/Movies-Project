@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import type { Movie } from "./movies.types";
 import { getMovies } from "./movies.service";
+import { useRef } from "react";
 
 export const useMovies = () => {
+  const loaderRef = useRef<HTMLDivElement | null>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -15,6 +17,7 @@ export const useMovies = () => {
       const { results, totalPages: apiTotalPages } =
         await getMovies(pageNumber);
       setTotalPages(apiTotalPages);
+      
       setMovies((prev) => {
         const map = new Map();
 
@@ -36,24 +39,29 @@ export const useMovies = () => {
   }, [page]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (loading) return;
-      if (page > totalPages) return;
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const docHeight = document.documentElement.offsetHeight;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
 
-      if (scrollTop + windowHeight >= docHeight - 100) {
-        loadMore();
-      }
-    };
+        if (entry.isIntersecting && !loading && page < totalPages) {
+          loadMore();
+        }
+      },
+      {
+        threshold: 1,
+      },
+    );
 
-    window.addEventListener("scroll", handleScroll);
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
     };
-  }, [loading]);
+  }, [loading, page, totalPages]);
 
-  return { movies, loading };
+  return { movies, loading, loaderRef };
 };
