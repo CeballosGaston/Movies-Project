@@ -1,15 +1,28 @@
 import type { Movie } from "../movies.types";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Star, Heart } from "lucide-react";
+import { useFavorites } from "../../favorites/FavoritesContext";
 
 interface Props {
   movie: Movie;
 }
 
 export const MovieCard = ({ movie }: Props) => {
-  const navigate = useNavigate();
 
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+  const favorite = isFavorite(movie.id);
+
+const handleFavoriteClick = (e: React.MouseEvent) => {
+  e.preventDefault();
+
+  if (favorite) {
+    removeFavorite(movie.id);
+  } else {
+    addFavorite(movie);
+  }
+};
+
+  
 
   return (
     <Link to={`/movie/${movie.id}`} className="block">
@@ -33,17 +46,9 @@ export const MovieCard = ({ movie }: Props) => {
                   </h3>
                   <p className="text-white/80 text-xs mt-1">{movie.year}</p>
                 </div>
-                {/* <Button
-                  size="icon"
-                  variant="ghost"
-                  className={cn(
-                    'shrink-0 hover:bg-white/20 size-8',
-                    favorite ? 'text-red-500 hover:text-red-600' : 'text-white hover:text-white'
-                  )}
-                  onClick={handleFavoriteClick}
-                >
-                  <Heart className={cn('size-4', favorite && 'fill-current')} />
-                </Button> */}
+               <button onClick={handleFavoriteClick}>
+  <Heart className={favorite ? "fill-red-500 text-red-500" : ""} />
+</button>
               </div>
 
               {/* Rating and Genres */}

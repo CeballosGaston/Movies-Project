@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import type { Movie } from "../movies/movies.types";
+import { useEffect } from "react";
 
 interface FavoritesContextType {
   favorites: Movie[];
@@ -11,7 +12,17 @@ interface FavoritesContextType {
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
 export const FavoritesProvider = ({ children }: { children: React.ReactNode }) => {
-  const [favorites, setFavorites] = useState<Movie[]>([]);
+  
+  
+const [favorites, setFavorites] = useState<Movie[]>(()=>{
+const stored = localStorage.getItem("favorites");
+return stored ? JSON.parse(stored) : [];
+});
+
+useEffect(()=>{
+localStorage.setItem("favorites", JSON.stringify(favorites));
+
+}, [favorites])
 
   const addFavorite = (movie: Movie) => {
     setFavorites((prev) => [...prev, movie]);
