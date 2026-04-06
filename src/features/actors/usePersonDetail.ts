@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { getActorDetails } from "./actor.service";
-import type { ActorDetails } from "./actors.type";
+import { getPersonDetails } from "./person.service";
+import type { PersonDetails } from "../shared/types/person.type";
 
 export const useActorDetail = (id: string) => {
-  const [actor, setActor] = useState<ActorDetails | null>(null);
+  const [actor, setActor] = useState<PersonDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -11,7 +11,7 @@ export const useActorDetail = (id: string) => {
     const load = async () => {
       try {
         setLoading(true);
-        const data = await getActorDetails(id);
+        const data = await getPersonDetails(id);
         setActor(data);
       } catch (err) {
         console.error(err);

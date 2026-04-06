@@ -35,17 +35,16 @@ export const MovieDetailPage = () => {
         {movie.director && (
           <div className="mt-10">
             <h2 className="text-xl font-semibold mb-4">Director</h2>
-            <div
-              className="flex items-center gap-4 cursor-pointer hover:opacity-80"
-              onClick={() => navigate(`/director/${movie.director!.id}`)}
-            >
-              <img
-                src={movie.director.profile_path || "/no-avatar.png"}
-                alt={movie.director.name}
-                className="w-16 h-16 rounded-full object-cover"
-              />
-              <p className="text-lg">{movie.director.name}</p>
-            </div>
+            <Link key={movie.director.id} to={`/person/${movie.director.id}`}>
+              <div className="flex items-center gap-4 cursor-pointer hover:opacity-80">
+                <img
+                  src={movie.director.profile_path || "/no-avatar.png"}
+                  alt={movie.director.name}
+                  className="w-16 h-16 rounded-full object-cover"
+                />
+                <p className="text-lg">{movie.director.name}</p>
+              </div>
+            </Link>
           </div>
         )}
 
@@ -55,12 +54,13 @@ export const MovieDetailPage = () => {
             <h2 className="text-xl font-semibold mb-4">Cast</h2>
             <div className="flex gap-4 overflow-x-auto pb-2">
               {movie.cast.map((actor) => (
-                <Link key={actor.id} to={`/actors/${actor.id}`}>
+                <Link key={actor.id} to={`/person/${actor.id}`}>
                   <img
                     src={actor.profile_path}
                     alt={actor.name}
                     className="w-12 h-12 rounded-full"
                   />
+                  <p>{actor.name}</p>
                 </Link>
               ))}
             </div>

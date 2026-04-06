@@ -1,7 +1,6 @@
-import { Person } from "../shared/types/sharedTypes";
+import { Person } from "./sharedTypes";
 
-
-export interface ActorDetails extends Person {
+export interface PersonDetails extends Person {
   biography?: string;
   birthday?: string;
   place_of_birth?: string;

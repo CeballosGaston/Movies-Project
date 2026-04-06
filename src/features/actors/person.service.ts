@@ -1,20 +1,16 @@
 import tmdbClient from "../../core/api/tmdb.client";
-import type { ActorDetails } from "./actors.type";
+import type { PersonDetails } from "../shared/types/person.type";
 
 interface CreditsResponse {
   cast: { id: number; title: string; poster_path: string }[];
-  crew: { id: number; title: string; job: string ; poster_path:string}[];
+  crew: { id: number; title: string; job: string; poster_path: string }[];
 }
 
-export const getActorDetails = async (
+export const getPersonDetails = async (
   id: string,
-): Promise<
-  ActorDetails & {
-    movie_credits: { id: number; title: string; poster_path: string }[];
-  }
-> => {
+): Promise<PersonDetails> => {
   const res = await tmdbClient.get(`/person/${id}`);
-  const actorData = res.data;
+  const personData = res.data;
 
   const creditsRes = await tmdbClient.get(`/person/${id}/movie_credits`);
   const creditsData: CreditsResponse = creditsRes.data;
@@ -38,14 +34,14 @@ export const getActorDetails = async (
   const movie_credits = [...castMovies, ...crewMovies];
 
   return {
-    id: actorData.id,
-    name: actorData.name,
-    profile_path: actorData.profile_path
-      ? `https://image.tmdb.org/t/p/w200${actorData.profile_path}`
+    id: personData.id,
+    name: personData.name,
+    profile_path: personData.profile_path
+      ? `https://image.tmdb.org/t/p/w200${personData.profile_path}`
       : "",
-    biography: actorData.biography,
-    birthday: actorData.birthday,
-    place_of_birth: actorData.place_of_birth,
+    biography: personData.biography,
+    birthday: personData.birthday,
+    place_of_birth: personData.place_of_birth,
     movie_credits,
   };
 };
