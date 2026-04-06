@@ -3,7 +3,7 @@ import { HomePage } from "../pages/HomePage";
 import { MovieDetailPage } from "../features/movies/pages/MovieDetailPage";
 import { FavoritesPage } from "../features/favorites/pages/FavoritesPage";
 import { SearchPage } from "../pages/SearchPage";
-import { PersonDetail } from "../features/actors/pages/PersonDetail";
+import { PersonDetail } from "../features/persons/pages/PersonDetail";
 
 export const AppRouter = () => {
   return (
