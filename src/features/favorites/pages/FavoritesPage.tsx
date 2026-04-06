@@ -29,6 +29,8 @@ export const FavoritesPage = () => {
   );
 }
   return (
+<div className="min-h-screen bg-gray-900 text-white px-6 py-8">
+
     <div className="max-w-7xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">Your Favorites ❤️</h1>
 
@@ -38,5 +40,9 @@ export const FavoritesPage = () => {
         ))}
       </div>
     </div>
+
+
+</div>
+
   );
 };

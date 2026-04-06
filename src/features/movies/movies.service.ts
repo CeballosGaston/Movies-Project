@@ -14,9 +14,13 @@ export const getPopularMovies = async () => {
 };
 
 export const getMovieDetails = async (id: string) => {
-  
   const res = await tmdbClient.get(`/movie/${id}`);
-  return mapMovieDetails(res.data);
+  const movieData = res.data;
+
+  const creditsRes = await tmdbClient.get(`/movie/${id}/credits`);
+  const creditsData = creditsRes.data;
+
+  return mapMovieDetails(movieData, creditsData);
 };
 
 export const getMovies = async ({
@@ -59,7 +63,7 @@ export const getMovies = async ({
 
 export const searchMovies = async (
   query: string,
-  page: number = 1
+  page: number = 1,
 ): Promise<GetMoviesResponse> => {
   const res = await tmdbClient.get("/search/movie", {
     params: {

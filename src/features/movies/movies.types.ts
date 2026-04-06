@@ -1,4 +1,4 @@
-import type { Actor } from "../actors/actor.types";
+import { Person } from "../shared/types/sharedTypes";
 
 export interface Movie {
   id: number;
@@ -19,8 +19,8 @@ export interface MovieDetails {
   genres: string[];
   overview: string;
   runtime?: number;
-  director?: string;
-  cast?: Actor[];
+  director?: Person;
+  cast?: Person[];
   trailer?: string;
 }
 
