@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useMovieDetail } from "../useMovieDetail";
 import { Link } from "react-router-dom";
+import { RatingStars } from "../../../components/RatingStars";
 
 export const MovieDetailPage = () => {
   const { id } = useParams();
@@ -21,6 +22,8 @@ export const MovieDetailPage = () => {
           alt={movie.title}
           className="w-full max-w-xs mx-auto rounded-lg shadow-lg mb-6"
         />
+
+        <RatingStars movieId={movie.id}/>
 
         {/* Info */}
         <h1 className="text-3xl font-bold mb-4 text-center">{movie.title}</h1>
