@@ -1,37 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../useAuth";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
+  const { register } = useAuth();
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [name, setName] = useState("");
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validaciones
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValid = (email: string): boolean => emailRegex.test(email);
+    const result = register(name, email, password);
 
-    if (!email || !isValid(email) || !password || !name) {
-      setError("Please, enter your email, name and password");
+    if (!result.success) {
+      setError(result.error!);
       return;
     }
 
-    // Guardar en localStorage
-
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    if (users.find((u: any) => u.email === email)) {
-      setError("The user already exist");
-      return;
-    }
-
-    users.push({ email, password, name });
-    localStorage.setItem("users", JSON.stringify(users));
-
-    // Redirigir a login
     navigate("/login");
   };
 
@@ -42,6 +31,7 @@ export const RegisterPage = () => {
         onSubmit={handleRegister}
       >
         <h2 className="text-2xl font-bold mb-4 text-center">Registro</h2>
+
         {error && <p className="text-red-500 mb-2">{error}</p>}
 
         <input
@@ -51,6 +41,7 @@ export const RegisterPage = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+
         <input
           type="email"
           placeholder="Email"
@@ -61,7 +52,7 @@ export const RegisterPage = () => {
 
         <input
           type="password"
-          placeholder="Contraseña"
+          placeholder="Password"
           className="w-full mb-3 p-2 rounded bg-gray-700 text-white"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -71,7 +62,7 @@ export const RegisterPage = () => {
           type="submit"
           className="w-full bg-yellow-500 text-gray-900 font-bold py-2 rounded hover:bg-yellow-600"
         >
-          Sing Up
+          Sign Up
         </button>
       </form>
     </div>

@@ -5,8 +5,8 @@ import { FavoritesPage } from "../features/favorites/pages/FavoritesPage";
 import { SearchPage } from "../pages/SearchPage";
 import { PersonDetail } from "../features/persons/pages/PersonDetail";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { LoginPage } from "../pages/Login";
-import { RegisterPage } from "../pages/RegisterPage";
+import { LoginPage } from "../features/auth/pages/Login";
+import { RegisterPage } from "../features/auth/pages/RegisterPage";
 import { PublicRoute } from "./PublicRoute";
 
 export const AppRouter = () => {

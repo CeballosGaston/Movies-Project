@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../useAuth";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -10,26 +13,13 @@ export const LoginPage = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setError("Please enter your email and password");
+    const result = login(email, password);
+
+    if (!result.success) {
+      setError(result.error!);
       return;
     }
 
-    // Buscar usuario 
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const user = users.find(
-      (u: any) => u.email === email && u.password === password
-    );
-
-    if (!user) {
-      setError("Email or password incorrect");
-      return;
-    }
-
-    // Guardado de "token"
-    localStorage.setItem("currentUser", JSON.stringify(user));
-
-    // Redirigir al home 
     navigate("/");
   };
 
@@ -40,6 +30,7 @@ export const LoginPage = () => {
         onSubmit={handleLogin}
       >
         <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+
         {error && <p className="text-red-500 mb-2">{error}</p>}
 
         <input
@@ -49,6 +40,7 @@ export const LoginPage = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
         <input
           type="password"
           placeholder="Password"
