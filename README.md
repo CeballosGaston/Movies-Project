@@ -133,3 +133,8 @@ The design is:
 ## 📌 Final Notes
 
 This project aims to combine a modern user experience with a scalable architecture, allowing each user to build their own personal cinematic database.
+
+
+
+Add future implementations
+Add screen pritns
